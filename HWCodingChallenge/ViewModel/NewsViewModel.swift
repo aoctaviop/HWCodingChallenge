@@ -45,5 +45,9 @@ class NewsViewModel: ObservableObject {
 
         print(articles.count)
     }
+    
+    func isShowingGeneralFeed() -> Bool {
+        category == .general
+    }
 
 }

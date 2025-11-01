@@ -63,6 +63,10 @@ struct NewsListView: View {
                             Spacer()
                             Text("News")
                                 .font(.largeTitle)
+                            if !viewModel.isShowingGeneralFeed() {
+                                Text(viewModel.category.rawValue)
+                                    .font(.subheadline)
+                            }
                             Spacer()
                         }
                     }
