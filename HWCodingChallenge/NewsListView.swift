@@ -15,6 +15,7 @@ struct NewsListView: View {
 
     @State private var showProgressView: Bool = false
     @State private var errorMessage: String?
+    @State private var showSearchCriteriaSheet: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -52,6 +53,44 @@ struct NewsListView: View {
                     ContentUnavailableView(
                         "No news to show",
                         systemImage: "list.bullet"
+                    )
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    VStack {
+                        HStack(alignment: .center) {
+                            Spacer()
+                            Text("News")
+                                .font(.largeTitle)
+                            Spacer()
+                        }
+                    }
+                }
+            }
+            .toolbar {
+                ToolbarItem {
+                    Button {
+                        showSearchCriteriaSheet.toggle()
+                    } label: {
+                        Image(systemName: viewModel.category.image)
+                    }
+                    .confirmationDialog(
+                        "Select a category:",
+                        isPresented: $showSearchCriteriaSheet,
+                        actions: {
+                            ForEach(Category.allCases, id: \.rawValue) {
+                                category in
+                                Button(
+                                    category.rawValue.capitalized,
+                                    systemImage: category.image
+                                ) {
+                                    viewModel.category = category
+                                    viewModel.reset()
+                                    loadNews()
+                                }
+                            }
+                        }
                     )
                 }
             }

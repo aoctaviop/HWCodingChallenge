@@ -47,7 +47,7 @@ final class NetworkClientStub {
             response: HTTPURLResponse(
                 url:
                     NewsAPI
-                    .topHeadlines
+                    .topHeadlines(category: .all)
                     .generateURL()!,
                 statusCode: 200,
                 httpVersion: nil,

@@ -11,6 +11,24 @@ import XCTest
 
 final class NewsViewModelTests: XCTestCase {
 
+    
+    @MainActor
+    func testNewsViewModel_ChangeCategorySavesNewSelectedCategory() async throws
+    {
+        let viewModel = NewsViewModel(
+            newsService: NewsService(
+                networkClient: try NetworkClientStub.make()
+            )
+        )
+        
+        viewModel.category = .science
+        
+        let savedCategory =
+        UserDefaults.standard.string(forKey: Constants.Keys.category) ?? ""
+        
+        XCTAssertEqual(Category.science.rawValue, savedCategory)
+    }
+    
     @MainActor
     func testNewsViewModel_FetchNewsRetrievesNews() async throws {
         let news: [Article] = [

@@ -9,7 +9,7 @@ import Foundation
 
 enum NewsAPI {
     
-    case topHeadlines
+    case topHeadlines(category: Category?)
     
 }
 
@@ -45,7 +45,15 @@ extension NewsAPI: Endpoint {
         ]
         
         switch self {
-        case .topHeadlines:
+        case .topHeadlines(let category):
+            if let category = category, category != .all {
+                items.append(
+                    URLQueryItem(
+                        name: Parameters.category,
+                        value: category.rawValue
+                    ),
+                )
+            }
             items.append(contentsOf: [
                 URLQueryItem(
                     name: Parameters.country,

@@ -28,7 +28,7 @@ final class NetworkingLayerTests: XCTestCase {
             response: HTTPURLResponse(
                 url:
                     NewsAPI
-                    .topHeadlines
+                    .topHeadlines(category: .all)
                     .generateURL()!,
                 statusCode: 200,
                 httpVersion: nil,
@@ -45,7 +45,7 @@ final class NetworkingLayerTests: XCTestCase {
 
         let service = NewsService(networkClient: client)
 
-        let news = try await service.fetchNews()
+        let news = try await service.fetchNews(category: .all)
 
         XCTAssertEqual(news.articles.first?.title, "This is a title")
     }
@@ -55,7 +55,7 @@ final class NetworkingLayerTests: XCTestCase {
         URLProtocolStub.stub = (
             data: nil,
             response: HTTPURLResponse(
-                url: NewsAPI.topHeadlines.generateURL()!,
+                url: NewsAPI.topHeadlines(category: .all).generateURL()!,
                 statusCode: 500,
                 httpVersion: nil,
                 headerFields: nil
@@ -72,7 +72,7 @@ final class NetworkingLayerTests: XCTestCase {
         let service = NewsService(networkClient: client)
 
         do {
-            _ = try await service.fetchNews()
+            _ = try await service.fetchNews(category: .all)
             XCTFail("Expected an error but got success")
         } catch {
             XCTAssertEqual(
@@ -87,7 +87,7 @@ final class NetworkingLayerTests: XCTestCase {
         URLProtocolStub.stub = (
             data: "{}".data(using: .utf8)!,
             response: HTTPURLResponse(
-                url: NewsAPI.topHeadlines.generateURL()!,
+                url: NewsAPI.topHeadlines(category: .all).generateURL()!,
                 statusCode: 200,
                 httpVersion: nil,
                 headerFields: nil
@@ -104,7 +104,7 @@ final class NetworkingLayerTests: XCTestCase {
         let service = NewsService(networkClient: client)
 
         do {
-            _ = try await service.fetchNews()
+            _ = try await service.fetchNews(category: .all)
             XCTFail("Expected an error but got success")
         } catch {
             XCTAssertEqual(
@@ -119,7 +119,7 @@ final class NetworkingLayerTests: XCTestCase {
         URLProtocolStub.stub = (
             data: "".data(using: .utf8),
             response: HTTPURLResponse(
-                url: NewsAPI.topHeadlines.generateURL()!,
+                url: NewsAPI.topHeadlines(category: .all).generateURL()!,
                 statusCode: 200,
                 httpVersion: nil,
                 headerFields: nil
@@ -136,7 +136,7 @@ final class NetworkingLayerTests: XCTestCase {
         let service = NewsService(networkClient: client)
 
         do {
-            _ = try await service.fetchNews()
+            _ = try await service.fetchNews(category: .all)
             XCTFail("Expected an error but got success")
         } catch {
             XCTAssertEqual(

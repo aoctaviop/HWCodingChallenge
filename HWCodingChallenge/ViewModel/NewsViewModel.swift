@@ -11,18 +11,35 @@ import Foundation
 class NewsViewModel: ObservableObject {
 
     @Published var articles: [Article] = []
+    @Published var category: Category =
+    Category(
+        rawValue: UserDefaults.standard
+            .string(
+                forKey: Constants.Keys.category
+            ) ?? Category.all.rawValue
+    ) ?? .all
+    {
+        didSet {
+            UserDefaults.standard
+                .set(category.rawValue, forKey: Constants.Keys.category)
+        }
+    }
 
     private let newsService: NewsService
 
     init(newsService: NewsService) {
         self.newsService = newsService
     }
+    
+    func reset() {
+        articles.removeAll()
+    }
 
     @MainActor
     func fetchNews() async throws {
         let news =
             try await newsService
-            .fetchNews()
+            .fetchNews(category: category)
 
         articles.append(contentsOf: news.articles)
 

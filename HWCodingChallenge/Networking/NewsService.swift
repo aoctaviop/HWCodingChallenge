@@ -15,8 +15,8 @@ class NewsService {
         self.networkClient = networkClient
     }
 
-    func fetchNews() async throws -> News {
-        let request = try NewsAPI.topHeadlines.generateURLRequest()
+    func fetchNews(category: Category) async throws -> News {
+        let request = try NewsAPI.topHeadlines(category: category).generateURLRequest()
 
         return try await networkClient.send(request)
     }
