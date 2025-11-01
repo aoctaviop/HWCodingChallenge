@@ -15,7 +15,7 @@ final class NetworkingLayerTests: XCTestCase {
     func testFetchNews_ReturnsDecodedNews() async throws {
         let mockNews = News(
             articles: [
-                ArticleFactory.make(title: "This is a title")
+                ArticleFactory.make(.full, title: "This is a title")
             ]
         )
 

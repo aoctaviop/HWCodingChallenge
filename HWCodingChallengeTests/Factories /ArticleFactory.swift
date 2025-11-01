@@ -10,13 +10,22 @@ import Foundation
 @testable import HWCodingChallenge
 
 struct ArticleFactory {
-    
-    static func make(title: String = "This is a title") -> Article {
+
+    enum ArticleType {
+        case full
+        case missingDescription
+    }
+
+    static func make(
+        _ type: ArticleType,
+        title: String = "This is a title",
+        description: String = "This is a description"
+    ) -> Article {
         let author = "John Smith"
-        let description = "This is the description"
+        let description = type == .missingDescription ? nil : description
         let urlToImage = "https://example.com/image.jpg"
         let content = "This is some content"
-        
+
         let article = Article(
             author: author,
             title: title,
@@ -26,8 +35,8 @@ struct ArticleFactory {
             publishedAt: .now,
             content: content
         )
-        
+
         return article
     }
-    
+
 }
