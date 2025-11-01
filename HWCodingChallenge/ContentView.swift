@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject private var viewModel: NewsViewModel = NewsViewModel(
+        newsService: NewsService(networkClient: URLSessionNetworkClient())
+    )
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        List(viewModel.articles, id: \.title) { article in
+            Text(article.title)
         }
-        .padding()
+        .onAppear {
+            Task {
+                try? await viewModel.fetchNews()
+            }
+        }
     }
 }
 
