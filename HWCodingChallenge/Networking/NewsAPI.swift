@@ -46,7 +46,7 @@ extension NewsAPI: Endpoint {
         
         switch self {
         case .topHeadlines(let category):
-            if let category = category, category != .all {
+            if let category = category, category != .general {
                 items.append(
                     URLQueryItem(
                         name: Parameters.category,

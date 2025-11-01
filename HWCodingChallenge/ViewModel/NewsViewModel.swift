@@ -16,8 +16,8 @@ class NewsViewModel: ObservableObject {
         rawValue: UserDefaults.standard
             .string(
                 forKey: Constants.Keys.category
-            ) ?? Category.all.rawValue
-    ) ?? .all
+            ) ?? Category.general.rawValue
+    ) ?? .general
     {
         didSet {
             UserDefaults.standard

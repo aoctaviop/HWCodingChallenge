@@ -9,14 +9,13 @@ import Foundation
 
 enum Category: String, CaseIterable {
     
+    case general = "General"
     case business = "Business"
     case entertaiment = "Entertaiment"
-    case general = "General"
     case health = "Health"
     case science = "Science"
     case sports = "Sports"
     case technology = "Technology"
-    case all = "All"
     
 }
 
@@ -28,8 +27,6 @@ extension Category {
             return "bag"
         case .entertaiment:
             return "tv"
-        case .general:
-            return "book"
         case .health:
             return "bandage"
         case .science:
@@ -38,7 +35,7 @@ extension Category {
             return "figure.indoor.soccer"
         case .technology:
             return "network"
-        case .all:
+        case .general:
             return "slider.horizontal.3"
         }
     }
