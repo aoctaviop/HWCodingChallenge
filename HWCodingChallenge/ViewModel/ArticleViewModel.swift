@@ -23,4 +23,13 @@ struct ArticleViewModel {
         return article.description ?? ""
     }
     
+    func hasImageURL() -> Bool {
+        article.urlToImage != nil
+    }
+    
+    func getImageURl() -> URL? {
+        guard let urlToImage = article.urlToImage else { return nil }
+        return URL(string: urlToImage)
+    }
+    
 }
