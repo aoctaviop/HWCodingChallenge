@@ -10,7 +10,7 @@ import XCTest
 @testable import HWCodingChallenge
 
 final class NewsViewModelTests: XCTestCase {
-    
+
     @MainActor
     func testNewsViewModel_ChangeCategorySavesNewSelectedCategory() async throws
     {
@@ -26,27 +26,27 @@ final class NewsViewModelTests: XCTestCase {
             UserDefaults.standard.string(forKey: Constants.Keys.category) ?? ""
 
         XCTAssertEqual(Category.science.rawValue, savedCategory)
-    }
-    
+    }#imageLiteral(resourceName: "—Pngtree—black news icon free button_4437909.png")
+
     @MainActor
     func
-    testNewsViewModel_ResetClearArticles()
-    async throws
+        testNewsViewModel_ResetClearArticles()
+        async throws
     {
         let news: [Article] = [
             ArticleFactory.make(.full, title: "This is the first title"),
             ArticleFactory.make(.full, title: "This is the second title"),
         ]
-        
+
         let viewModel = NewsViewModel(
             newsService: NewsService(
                 networkClient: try NetworkClientStub.make(news)
             )
         )
-        
+
         try? await viewModel.fetchNews()
         viewModel.reset()
-        
+
         XCTAssertTrue(viewModel.articles.isEmpty)
     }
 
