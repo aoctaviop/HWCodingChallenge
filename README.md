@@ -124,8 +124,9 @@ HWCodingChallenge/
 1. **News Feed Screen**
 
    * Fetches top news articles
-   * Supports finite scroll (pagination)
-   * Search bar filters news by keywords
+   * Supports pagination
+   * Filter news by category
+   * Search by keywords
 
 2. **News Detail Screen**
 
