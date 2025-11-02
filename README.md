@@ -40,7 +40,7 @@ Combining **MVVM**, **SwiftUI**, **Combine**, and **Structured Concurrency (`asy
 * Fetches live news articles using **NewsAPI**
 * Displays results in a **paginated feed**
 * **Search bar** to query specific topics
-* **Detail screen** showing full article information
+* **Detail screen** showing article information
 * Uses **structured concurrency** (`async`/`await`) for networking
 * Reactive updates powered by **Combine**
 * Clean and testable **MVVM architecture**
