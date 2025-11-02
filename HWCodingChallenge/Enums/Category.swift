@@ -24,19 +24,19 @@ extension Category {
     var image: String {
         switch self {
         case .business:
-            return "bag"
+            return "suitcase"
         case .entertaiment:
-            return "tv"
+            return "theatermasks"
         case .health:
-            return "bandage"
+            return "stethoscope"
         case .science:
-            return "magnifyingglass"
+            return "flask"
         case .sports:
-            return "figure.indoor.soccer"
+            return "american.football"
         case .technology:
             return "network"
         case .general:
-            return "slider.horizontal.3"
+            return "globe.desk"
         }
     }
     
