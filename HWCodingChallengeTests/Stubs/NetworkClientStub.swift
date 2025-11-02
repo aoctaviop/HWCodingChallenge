@@ -14,29 +14,8 @@ final class NetworkClientStub {
     @MainActor
     static func make(_ news: [Article]? = nil) throws -> NetworkClient {
         let mockNews = News(
-            articles: news ?? [
-                Article(
-                    author: "John Smith",
-                    title: "This is the first title",
-                    description: "This is some description",
-                    url: "https://abcnews.go.com/",
-                    urlToImage:
-                        "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iUmZZ2Z_Xl8U/v1/1200x800.jpg",
-                    publishedAt: .now,
-                    content: "This is some content"
-                ),
-                Article(
-                    author: "John Smith",
-                    title: "This is the second title",
-                    description: "This is some description",
-                    url: "https://abcnews.go.com/",
-                    urlToImage:
-                        "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iUmZZ2Z_Xl8U/v1/1200x800.jpg",
-                    publishedAt: .now,
-                    content: "This is some content"
-                ),
-            ],
-            totalResults: 2
+            articles: news ?? [],
+            totalResults: news?.count ?? 0
         )
 
         let encoder = JSONEncoder()

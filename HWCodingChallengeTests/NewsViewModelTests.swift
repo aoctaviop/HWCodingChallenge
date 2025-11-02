@@ -31,8 +31,8 @@ final class NewsViewModelTests: XCTestCase {
     @MainActor
     func testNewsViewModel_FetchNewsRetrievesNews() async throws {
         let news: [Article] = [
-            ArticleFactory.make(.full, title: "Firs Title"),
-            ArticleFactory.make(.full, title: "Second Title"),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
         ]
 
         let viewModel = NewsViewModel(
@@ -82,26 +82,8 @@ final class NewsViewModelTests: XCTestCase {
     async throws
     {
         let news: [Article] = [
-            Article(
-                author: "John Smith",
-                title: "This is the first title",
-                description: "This is some description",
-                url: "https://abcnews.go.com/",
-                urlToImage:
-                    "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iUmZZ2Z_Xl8U/v1/1200x800.jpg",
-                publishedAt: .now,
-                content: "This is some content"
-            ),
-            Article(
-                author: "John Smith",
-                title: "This is the second title",
-                description: "This is some description",
-                url: "https://abcnews.go.com/",
-                urlToImage:
-                    "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iUmZZ2Z_Xl8U/v1/1200x800.jpg",
-                publishedAt: .now,
-                content: "This is some content"
-            ),
+            ArticleFactory.make(.full, title: "This is the first title"),
+            ArticleFactory.make(.full, title: "This is the second title"),
         ]
         
         let viewModel = NewsViewModel(
@@ -122,26 +104,8 @@ final class NewsViewModelTests: XCTestCase {
     async throws
     {
         let news: [Article] = [
-            Article(
-                author: "John Smith",
-                title: "This is the first title",
-                description: "This is some description",
-                url: "https://abcnews.go.com/",
-                urlToImage:
-                    "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iUmZZ2Z_Xl8U/v1/1200x800.jpg",
-                publishedAt: .now,
-                content: "This is some content"
-            ),
-            Article(
-                author: "John Smith",
-                title: "This is the second title",
-                description: "This is some description",
-                url: "https://abcnews.go.com/",
-                urlToImage:
-                    "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iUmZZ2Z_Xl8U/v1/1200x800.jpg",
-                publishedAt: .now,
-                content: "This is some content"
-            ),
+            ArticleFactory.make(.full, title: "This is the first title"),
+            ArticleFactory.make(.full, title: "This is the second title"),
         ]
         
         let viewModel = NewsViewModel(
@@ -155,6 +119,74 @@ final class NewsViewModelTests: XCTestCase {
         viewModel.filterNews("third")
         
         XCTAssertTrue(viewModel.articles.isEmpty)
+    }
+    
+    @MainActor
+    func testNewsViewModel_GetPaginationTextReturnsStringWhenThereAreResults()
+    async throws
+    {
+        let news: [Article] = [
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+            ArticleFactory.make(.full),
+        ]
+        
+        let viewModel = NewsViewModel(
+            newsService: NewsService(
+                networkClient: try NetworkClientStub.make(news)
+            )
+        )
+        
+        try? await viewModel.fetchNews()
+        
+        let totalPages = Int(ceil(Double(news.count) / Double(NewsAPI.pageSize)))
+        
+        XCTAssertEqual(
+            viewModel.getPaginationText(),
+            "Page 1 out of \(totalPages)"
+        )
+    }
+    
+    @MainActor
+    func testNewsViewModel_GetPaginationTextReturnsNilThereAreNoResults()
+    async throws
+    {
+        let viewModel = NewsViewModel(
+            newsService: NewsService(
+                networkClient: try NetworkClientStub.make()
+            )
+        )
+        
+        try? await viewModel.fetchNews()
+        
+        XCTAssertNil(viewModel.getPaginationText())
     }
     
     override func tearDown() {
