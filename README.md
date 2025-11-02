@@ -52,6 +52,27 @@ The app follows the **MVVM** pattern using **SwiftUI** and **Combine**:
 
 ---
 
+## 🖼️ Image Caching
+
+The project includes a custom `CachedImage` view, designed to efficiently download and cache remote images displayed in the news feed and detail views.
+
+When fetching images from an external API like **NewsAPI**, articles often include high-resolution thumbnails or cover images that may be repeatedly loaded as users scroll, paginate, or revisit items. Without caching, each image request would:
+
+* Re-download the same image multiple times
+* Increase **network bandwidth usage**
+* Degrade **scroll performance and user experience**
+* Slow down the UI due to repetitive decoding and rendering
+
+The `CachedImage` component addresses this by:
+
+* Downloading each image only **once per session**
+* Storing it temporarily in memory or on disk
+* Serving it instantly when the same URL is requested again
+
+This approach results in smoother scrolling, faster UI rendering, and reduced API calls — all critical for a performant, battery-efficient app that displays image-heavy content like a news feed.
+
+___
+
 ## 🏗️ Project Structure
 
 ```
