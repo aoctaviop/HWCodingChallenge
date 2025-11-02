@@ -15,7 +15,7 @@ enum NewsAPI {
 
 extension NewsAPI: Endpoint {
     
-    static let apiKey: String = "364043d3c33a4b52a3ad5dadb9bee163"
+    static let apiKey: String = "YOUR_API_KEY"
     static let pageSize: Int = 15
     
     enum Parameters {
