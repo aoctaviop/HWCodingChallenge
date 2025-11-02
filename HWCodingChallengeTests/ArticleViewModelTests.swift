@@ -22,6 +22,31 @@ final class ArticleViewModelTests: XCTestCase {
 
         XCTAssertEqual(viewModel.getTitle(), "This is a title")
     }
+    
+    @MainActor
+    func testArticleViewModel_GetAuthorReturnsUnknownAuthorWhenNil()
+    async throws
+    {
+        let viewModel = ArticleViewModel(ArticleFactory.make(.missingAuthor))
+        
+        let formattedAuthor = viewModel.getAuthor()
+        
+        XCTAssertEqual(formattedAuthor, "Unknown Author")
+    }
+    
+    @MainActor
+    func testArticleViewModel_GetAuthorReturnsFormattedAuthorWhenNotNil()
+    async throws
+    {
+        let author = "John Smith"
+        let viewModel = ArticleViewModel(
+            ArticleFactory.make(.full, author: author)
+        )
+        
+        let formattedAuthor = viewModel.getAuthor()
+        
+        XCTAssertEqual(formattedAuthor, "By \(author)")
+    }
 
     @MainActor
     func testArticleViewModel_GetDescriptionReturnsDescriptionWhenNotNil()
@@ -46,4 +71,43 @@ final class ArticleViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.getDescription(), "")
     }
 
+    @MainActor
+    func testArticleViewModel_GetDateReturnsRightStringFormattedDate()
+    async throws
+    {
+        let date: Date = .now
+        let expectedFormattedDate =
+        "Published on \(date.formatted(date: .abbreviated, time: .shortened))"
+        
+        let viewModel = ArticleViewModel(
+            ArticleFactory.make(.full)
+        )
+        
+        let formattedDate = viewModel.getDatePublished()
+        
+        XCTAssertEqual(formattedDate, expectedFormattedDate)
+    }
+    
+    @MainActor
+    func testArticleViewModel_GetContentReturnsContentWhenNotNil() async throws
+    {
+        let content = "This is some content"
+        let viewModel = ArticleViewModel(
+            ArticleFactory.make(.full, content: content)
+        )
+        
+        XCTAssertEqual(viewModel.getContent(), content)
+    }
+    
+    @MainActor
+    func testArticleViewModel_GetContentReturnsEmptyStringWhenContentNil()
+    async throws
+    {
+        let viewModel = ArticleViewModel(
+            ArticleFactory.make(.missingContent)
+        )
+        
+        XCTAssertEqual(viewModel.getContent(), "")
+    }
+    
 }
