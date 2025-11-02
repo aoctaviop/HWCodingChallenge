@@ -17,7 +17,7 @@ This project uses **NewsAPI** as the data source.
 
 ## 🧩 Architecture
 
-The app follows the **MVVM** pattern using **SwiftUI**, **Combine** and *Structured Concurrency*:
+The app follows the **MVVM** pattern using **SwiftUI**, **Combine** and **Structured Concurrency**:
 
 Combining **MVVM**, **SwiftUI**, **Combine**, and **Structured Concurrency (`async`/`await`)** results in a clean, modern, and highly maintainable architecture for iOS apps:
 
