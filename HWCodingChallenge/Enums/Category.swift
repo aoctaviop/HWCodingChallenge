@@ -7,8 +7,9 @@
 
 import Foundation
 
+/// Represents different categories that can be used for the news feed.
 enum Category: String, CaseIterable {
-    
+
     case general = "General"
     case business = "Business"
     case entertaiment = "Entertaiment"
@@ -16,11 +17,11 @@ enum Category: String, CaseIterable {
     case science = "Science"
     case sports = "Sports"
     case technology = "Technology"
-    
+
 }
 
 extension Category {
-    
+
     var image: String {
         switch self {
         case .business:
@@ -39,5 +40,5 @@ extension Category {
             return "globe.desk"
         }
     }
-    
+
 }

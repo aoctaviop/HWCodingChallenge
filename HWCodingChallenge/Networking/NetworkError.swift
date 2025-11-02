@@ -8,14 +8,14 @@
 import Foundation
 
 enum NetworkError: Error, Equatable {
-    
+
     case invalidURL
     case invalidResponse
     case decodingError(Error)
     case serverError(statusCode: Int, errorMessage: String?)
     case noData
     case underlying(Error)
-    
+
     static func == (lhs: NetworkError, rhs: NetworkError) -> Bool {
         switch (lhs, rhs) {
         case (.invalidURL, .invalidURL):
@@ -34,5 +34,5 @@ enum NetworkError: Error, Equatable {
             return false
         }
     }
-    
+
 }

@@ -22,29 +22,29 @@ final class ArticleViewModelTests: XCTestCase {
 
         XCTAssertEqual(viewModel.getTitle(), "This is a title")
     }
-    
+
     @MainActor
     func testArticleViewModel_GetAuthorReturnsUnknownAuthorWhenNil()
-    async throws
+        async throws
     {
         let viewModel = ArticleViewModel(ArticleFactory.make(.missingAuthor))
-        
+
         let formattedAuthor = viewModel.getAuthor()
-        
+
         XCTAssertEqual(formattedAuthor, "Unknown Author")
     }
-    
+
     @MainActor
     func testArticleViewModel_GetAuthorReturnsFormattedAuthorWhenNotNil()
-    async throws
+        async throws
     {
         let author = "John Smith"
         let viewModel = ArticleViewModel(
             ArticleFactory.make(.full, author: author)
         )
-        
+
         let formattedAuthor = viewModel.getAuthor()
-        
+
         XCTAssertEqual(formattedAuthor, "By \(author)")
     }
 
@@ -73,21 +73,21 @@ final class ArticleViewModelTests: XCTestCase {
 
     @MainActor
     func testArticleViewModel_GetDateReturnsRightStringFormattedDate()
-    async throws
+        async throws
     {
         let date: Date = .now
         let expectedFormattedDate =
-        "Published on \(date.formatted(date: .abbreviated, time: .shortened))"
-        
+            "Published on \(date.formatted(date: .abbreviated, time: .shortened))"
+
         let viewModel = ArticleViewModel(
             ArticleFactory.make(.full)
         )
-        
+
         let formattedDate = viewModel.getDatePublished()
-        
+
         XCTAssertEqual(formattedDate, expectedFormattedDate)
     }
-    
+
     @MainActor
     func testArticleViewModel_GetContentReturnsContentWhenNotNil() async throws
     {
@@ -95,69 +95,71 @@ final class ArticleViewModelTests: XCTestCase {
         let viewModel = ArticleViewModel(
             ArticleFactory.make(.full, content: content)
         )
-        
+
         XCTAssertEqual(viewModel.getContent(), content)
     }
-    
+
     @MainActor
     func testArticleViewModel_GetContentReturnsEmptyStringWhenContentNil()
-    async throws
+        async throws
     {
         let viewModel = ArticleViewModel(
             ArticleFactory.make(.missingContent)
         )
-        
+
         XCTAssertEqual(viewModel.getContent(), "")
     }
-    
+
     @MainActor
-    func testArticleViewModel_HasImageURLReturnsTrueWhenNotNil() async throws
-    {
+    func testArticleViewModel_HasImageURLReturnsTrueWhenNotNil() async throws {
         let viewModel = ArticleViewModel(
             ArticleFactory.make(.full)
         )
-        
+
         XCTAssertTrue(viewModel.hasImageURL())
     }
-    
+
     @MainActor
-    func testArticleViewModel_HasImageURLReturnsFalseWhenNil() async throws
-    {
+    func testArticleViewModel_HasImageURLReturnsFalseWhenNil() async throws {
         let viewModel = ArticleViewModel(
             ArticleFactory.make(.missingURLToImage)
         )
-        
+
         XCTAssertFalse(viewModel.hasImageURL())
     }
-    
+
     @MainActor
-    func testArticleViewModel_GetImageURLReturnsURLWhenNotNil() async throws
-    {
+    func testArticleViewModel_GetImageURLReturnsURLWhenNotNil() async throws {
         let viewModel = ArticleViewModel(
             ArticleFactory.make(.full, imageURL: "http://www.imageurl.com")
         )
-        
-        XCTAssertEqual(viewModel.getImageURL(), URL(string: "http://www.imageurl.com"))
+
+        XCTAssertEqual(
+            viewModel.getImageURL(),
+            URL(string: "http://www.imageurl.com")
+        )
     }
-    
+
     @MainActor
-    func testArticleViewModel_GetImageURLReturnsNilWhenNil() async throws
-    {
+    func testArticleViewModel_GetImageURLReturnsNilWhenNil() async throws {
         let viewModel = ArticleViewModel(
             ArticleFactory.make(.missingURLToImage)
         )
-        
+
         XCTAssertNil(viewModel.getImageURL())
     }
-    
+
     @MainActor
     func testArticleViewModel_GetArticleURLReturnsURLWhenValidURL() async throws
     {
         let viewModel = ArticleViewModel(
             ArticleFactory.make(.full, url: "https://abcnews.go.com/")
         )
-        
-        XCTAssertEqual(viewModel.getArticleURL(), URL(string: "https://abcnews.go.com/"))
+
+        XCTAssertEqual(
+            viewModel.getArticleURL(),
+            URL(string: "https://abcnews.go.com/")
+        )
     }
-    
+
 }

@@ -8,9 +8,9 @@
 import Foundation
 
 enum Constants {
-    
+
     enum Keys {
         static let category: String = "category"
     }
-    
+
 }

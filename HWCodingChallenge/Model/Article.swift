@@ -8,7 +8,7 @@
 import Foundation
 
 struct Article: Codable, Equatable {
-    
+
     let author: String?
     let title: String
     let description: String?
@@ -16,5 +16,5 @@ struct Article: Codable, Equatable {
     let urlToImage: String?
     let publishedAt: Date
     let content: String?
-    
+
 }

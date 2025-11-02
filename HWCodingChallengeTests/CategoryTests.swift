@@ -5,23 +5,24 @@
 //  Created by Octavio on 2/11/25.
 //
 
-import XCTest
-
 import Foundation
 import Testing
+import XCTest
 
 @testable import HWCodingChallenge
 
 struct CategoryTests {
-    
+
     @Test(
         arguments: Category.allCases
     )
-    func Category_CategoryRawValueIsTheExpected(category: HWCodingChallenge.Category)
-    async throws
+    func Category_CategoryRawValueIsTheExpected(
+        category: HWCodingChallenge.Category
+    )
+        async throws
     {
         var expectedRawValue = ""
-        
+
         switch category {
         case .general:
             expectedRawValue = "General"
@@ -38,18 +39,20 @@ struct CategoryTests {
         case .technology:
             expectedRawValue = "Technology"
         }
-        
+
         #expect(category.rawValue == expectedRawValue)
     }
-    
+
     @Test(
         arguments: Category.allCases
     )
-    func Category_CategoryImageIsTheExpected(category: HWCodingChallenge.Category)
-    async throws
+    func Category_CategoryImageIsTheExpected(
+        category: HWCodingChallenge.Category
+    )
+        async throws
     {
         var expectedImage = ""
-        
+
         switch category {
         case .general:
             expectedImage = "globe.desk"
@@ -66,8 +69,8 @@ struct CategoryTests {
         case .technology:
             expectedImage = "network"
         }
-        
+
         #expect(category.image == expectedImage)
     }
- 
+
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol Endpoint {
-    
+
     var scheme: String { get }
     var baseURL: String { get }
     var path: String { get }
@@ -16,5 +16,5 @@ protocol Endpoint {
     var method: String { get }
     func generateURL() -> URL?
     func generateURLRequest() throws -> URLRequest
-    
+
 }

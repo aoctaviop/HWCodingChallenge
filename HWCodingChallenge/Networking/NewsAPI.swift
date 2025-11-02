@@ -8,38 +8,38 @@
 import Foundation
 
 enum NewsAPI {
-    
+
     case topHeadlines(category: Category?, page: Int)
-    
+
 }
 
 extension NewsAPI: Endpoint {
-    
+
     static let apiKey: String = "YOUR_API_KEY"
     static let pageSize: Int = 15
-    
+
     enum Parameters {
         static let category = "category"
         static let page = "page"
         static let pageSize = "pageSize"
         static let country = "country"
     }
-    
+
     var scheme: String {
         "https"
     }
-    
+
     var baseURL: String {
         "newsapi.org"
     }
-    
+
     var path: String {
         switch self {
         case .topHeadlines:
             return "/v2/top-headlines"
         }
     }
-    
+
     var queryItems: [URLQueryItem] {
         var items: [URLQueryItem] = [
             URLQueryItem(
@@ -47,7 +47,7 @@ extension NewsAPI: Endpoint {
                 value: NewsAPI.apiKey
             )
         ]
-        
+
         switch self {
         case .topHeadlines(let category, let page):
             if let category = category, category != .general {
@@ -74,31 +74,31 @@ extension NewsAPI: Endpoint {
             ]
             )
         }
-        
+
         return items
     }
-    
+
     var method: String {
         "get"
     }
-    
+
     func generateURL() -> URL? {
         var components = URLComponents()
         components.scheme = scheme
         components.host = baseURL
         components.path = path
         components.queryItems = queryItems
-        
+
         return components.url
     }
-    
+
     func generateURLRequest() throws -> URLRequest {
         guard let url = generateURL() else { throw NetworkError.invalidURL }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = method
-        
+
         return request
     }
-    
+
 }
