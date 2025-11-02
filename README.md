@@ -17,7 +17,15 @@ This project uses **NewsAPI** as the data source.
 
 ## 🧩 Architecture
 
-The app follows the **MVVM** pattern using **SwiftUI** and **Combine**:
+The app follows the **MVVM** pattern using **SwiftUI**, **Combine** and *Structured Concurrency*:
+
+Combining **MVVM**, **SwiftUI**, **Combine**, and **Structured Concurrency (`async`/`await`)** results in a clean, modern, and highly maintainable architecture for iOS apps:
+
+* **Separation of concerns:** MVVM cleanly divides responsibilities — the Model handles data, the ViewModel manages logic, and the View focuses on presentation.
+* **Reactive updates:** `@Published` properties in the ViewModel automatically update SwiftUI views using Combine’s data flow.
+* **Simplified asynchronous code:** Structured Concurrency (`async`/`await`) replaces complex completion handlers with straightforward, readable async functions.
+* **Improved performance and reliability:** Tasks are well-scoped and automatically cancelled when no longer needed, reducing memory leaks or unnecessary network calls.
+* **Testability and scalability:** ViewModels can be tested in isolation, and new features can be added without affecting the rest of the architecture.
 
 | Layer         | Responsibility                                                                                      | Key Features                                                                                                                 |
 | ------------- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
