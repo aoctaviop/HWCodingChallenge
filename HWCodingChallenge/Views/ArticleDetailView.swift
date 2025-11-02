@@ -17,7 +17,7 @@ struct ArticleDetailview: View {
             var maxImageWidth = UIScreen.main.bounds.size.width
             VStack {
                 ZStack(alignment: .bottom) {
-                    if let imageURL = viewModel.getImageURl() {
+                    if let imageURL = viewModel.getImageURL() {
                         CachedImage(url: imageURL)
                             .frame(
                                 width: maxImageWidth,

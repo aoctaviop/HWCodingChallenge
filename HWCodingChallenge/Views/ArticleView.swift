@@ -19,7 +19,7 @@ struct ArticleView<ArticleDetailView: View>: View {
         } label: {
             ZStack {
                 ZStack {
-                    if let imageURL = viewModel.getImageURl() {
+                    if let imageURL = viewModel.getImageURL() {
                         CachedImage(url: imageURL)
                             .frame(minWidth: 150.0)
                             .clipShape(RoundedRectangle(cornerRadius: 20.0))

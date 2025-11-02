@@ -39,7 +39,7 @@ struct ArticleViewModel {
         article.urlToImage != nil
     }
     
-    func getImageURl() -> URL? {
+    func getImageURL() -> URL? {
         guard let urlToImage = article.urlToImage else { return nil }
         return URL(string: urlToImage)
     }

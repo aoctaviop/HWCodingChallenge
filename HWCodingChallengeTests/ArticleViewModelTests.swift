@@ -110,4 +110,54 @@ final class ArticleViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.getContent(), "")
     }
     
+    @MainActor
+    func testArticleViewModel_HasImageURLReturnsTrueWhenNotNil() async throws
+    {
+        let viewModel = ArticleViewModel(
+            ArticleFactory.make(.full)
+        )
+        
+        XCTAssertTrue(viewModel.hasImageURL())
+    }
+    
+    @MainActor
+    func testArticleViewModel_HasImageURLReturnsFalseWhenNil() async throws
+    {
+        let viewModel = ArticleViewModel(
+            ArticleFactory.make(.missingURLToImage)
+        )
+        
+        XCTAssertFalse(viewModel.hasImageURL())
+    }
+    
+    @MainActor
+    func testArticleViewModel_GetImageURLReturnsURLWhenNotNil() async throws
+    {
+        let viewModel = ArticleViewModel(
+            ArticleFactory.make(.full, imageURL: "http://www.imageurl.com")
+        )
+        
+        XCTAssertEqual(viewModel.getImageURL(), URL(string: "http://www.imageurl.com"))
+    }
+    
+    @MainActor
+    func testArticleViewModel_GetImageURLReturnsNilWhenNil() async throws
+    {
+        let viewModel = ArticleViewModel(
+            ArticleFactory.make(.missingURLToImage)
+        )
+        
+        XCTAssertNil(viewModel.getImageURL())
+    }
+    
+    @MainActor
+    func testArticleViewModel_GetArticleURLReturnsURLWhenValidURL() async throws
+    {
+        let viewModel = ArticleViewModel(
+            ArticleFactory.make(.full, url: "https://abcnews.go.com/")
+        )
+        
+        XCTAssertEqual(viewModel.getArticleURL(), URL(string: "https://abcnews.go.com/"))
+    }
+    
 }
