@@ -83,9 +83,7 @@ HWCodingChallenge/
 │   ├── CachedImage.swift
 │   └── NewsListView.swift
 │
-├── HWCodingChallengeApp.swift
-│
-└── NewsListView.swift
+└── HWCodingChallengeApp.swift
 ```
 
 
