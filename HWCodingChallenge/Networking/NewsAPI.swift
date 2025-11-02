@@ -59,6 +59,10 @@ extension NewsAPI: Endpoint {
                     name: Parameters.country,
                     value: "us"
                 ),
+                URLQueryItem(
+                    name: Parameters.pageSize,
+                    value: "15"
+                ),
             ]
             )
         }

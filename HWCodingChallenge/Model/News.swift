@@ -10,5 +10,6 @@ import Foundation
 struct News: Codable, Equatable {
     
     let articles: [Article]
+    let totalResults: Int
     
 }

@@ -16,7 +16,8 @@ final class NetworkingLayerTests: XCTestCase {
         let mockNews = News(
             articles: [
                 ArticleFactory.make(.full, title: "This is a title")
-            ]
+            ],
+            totalResults: 1
         )
 
         let encoder = JSONEncoder()

@@ -10,7 +10,7 @@ import Foundation
 @testable import HWCodingChallenge
 
 final class NetworkClientStub {
-    
+
     @MainActor
     static func make(_ news: [Article]? = nil) throws -> NetworkClient {
         let mockNews = News(
@@ -35,13 +35,14 @@ final class NetworkClientStub {
                     publishedAt: .now,
                     content: "This is some content"
                 ),
-            ]
+            ],
+            totalResults: 2
         )
-        
+
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         let data = try encoder.encode(mockNews)
-        
+
         URLProtocolStub.stub = (
             data: data,
             response: HTTPURLResponse(
@@ -55,14 +56,14 @@ final class NetworkClientStub {
             ),
             error: nil
         )
-        
+
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [URLProtocolStub.self]
-        
+
         let stubbedSession = URLSession(configuration: config)
         let client = URLSessionNetworkClient(session: stubbedSession)
-        
+
         return client
     }
-    
+
 }

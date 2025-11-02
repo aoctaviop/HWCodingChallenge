@@ -25,7 +25,7 @@ struct NewsListView: View {
                     ForEach(
                         viewModel.articles.enumerated(),
                         id: \.offset
-                    ) { _, article in
+                    ) { index, article in
                         let articleViewModel = ArticleViewModel(article)
                         ArticleView(
                             viewModel: articleViewModel,
@@ -35,6 +35,12 @@ struct NewsListView: View {
                                 )
                             }
                         )
+                        .onAppear {
+                            Task {
+                                await viewModel
+                                    .checkPagination(itemIndex: index)
+                            }
+                        }
                     }
                 }
                 .scrollContentBackground(.hidden)
@@ -69,6 +75,10 @@ struct NewsListView: View {
                                     .font(.subheadline)
                             }
                             Spacer()
+                        }
+                        if let paginationString = viewModel.getPaginationText() {
+                            Text(paginationString)
+                                .font(.footnote)
                         }
                     }
                 }
@@ -137,11 +147,11 @@ struct NewsListView: View {
             }
         }
     }
-    
+
     private func filterNews(_ searchText: String) {
         viewModel.filterNews(searchText)
     }
-    
+
 }
 
 #Preview {

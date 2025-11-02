@@ -26,7 +26,12 @@ class NewsViewModel: ObservableObject {
     }
 
     private let newsService: NewsService
+
     private var fetchedArticles: [Article] = []
+
+    private var totalResults: Int = 0
+    private var totalPages: Int = 0
+    private var currentPage: Int = 1
 
     init(newsService: NewsService) {
         self.newsService = newsService
@@ -35,6 +40,10 @@ class NewsViewModel: ObservableObject {
     func reset() {
         fetchedArticles.removeAll()
         articles.removeAll()
+        
+        totalResults = 0
+        totalPages = 0
+        currentPage = 1
     }
 
     @MainActor
@@ -44,8 +53,14 @@ class NewsViewModel: ObservableObject {
             .fetchNews(category: category)
 
         fetchedArticles.append(contentsOf: news.articles)
-        
+
         articles = fetchedArticles
+        totalResults = news.totalResults
+        totalPages = Int(ceil(Double(totalResults) / 15.0))
+        
+        print(
+            "\(articles.count) resullts out of \(totalResults), page \(currentPage) out of \(totalPages)"
+        )
     }
 
     func isShowingGeneralFeed() -> Bool {
@@ -55,7 +70,7 @@ class NewsViewModel: ObservableObject {
     func filterNews(_ searchText: String) {
         if !searchText.isEmpty {
             articles =
-            fetchedArticles
+                fetchedArticles
                 .filter(
                     {
                         $0.title.lowercased().contains(searchText.lowercased())
@@ -63,6 +78,23 @@ class NewsViewModel: ObservableObject {
         } else {
             articles = fetchedArticles
         }
+    }
+
+    func checkPagination(itemIndex: Int) async {
+        print("Last loaded item: \(itemIndex)")
+
+        if itemIndex == articles.count - 1, currentPage < totalPages {
+            currentPage += 1
+            print("Current page \(currentPage)")
+            try? await fetchNews()
+        }
+    }
+    
+    func getPaginationText() -> String? {
+        guard !articles.isEmpty && totalResults > 0 else {
+            return nil
+        }
+        return "Showing \(fetchedArticles.count) out of \(totalResults)"
     }
 
 }
