@@ -34,7 +34,10 @@ extension NewsAPI: Endpoint {
     }
     
     var path: String {
-        "/v2/top-headlines"
+        switch self {
+        case .topHeadlines:
+            return "/v2/top-headlines"
+        }
     }
     
     var queryItems: [URLQueryItem] {

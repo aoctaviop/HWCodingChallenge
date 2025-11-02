@@ -14,6 +14,7 @@ protocol Endpoint {
     var path: String { get }
     var queryItems: [URLQueryItem] { get }
     var method: String { get }
+    func generateURL() -> URL?
     func generateURLRequest() throws -> URLRequest
     
 }
