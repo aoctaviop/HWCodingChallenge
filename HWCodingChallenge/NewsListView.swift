@@ -16,6 +16,7 @@ struct NewsListView: View {
     @State private var showProgressView: Bool = false
     @State private var errorMessage: String?
     @State private var showSearchCriteriaSheet: Bool = false
+    @State private var searchText = ""
 
     var body: some View {
         NavigationStack {
@@ -98,6 +99,15 @@ struct NewsListView: View {
                     )
                 }
             }
+            .searchable(text: $searchText, prompt: "")
+            .onChange(
+                of: searchText,
+                { new, old in
+                    if !new.elementsEqual(old) {
+                        filterNews(searchText)
+                    }
+                }
+            )
         }
         .onAppear {
             loadNews()
@@ -127,6 +137,11 @@ struct NewsListView: View {
             }
         }
     }
+    
+    private func filterNews(_ searchText: String) {
+        viewModel.filterNews(searchText)
+    }
+    
 }
 
 #Preview {

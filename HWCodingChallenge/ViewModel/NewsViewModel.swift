@@ -12,12 +12,12 @@ class NewsViewModel: ObservableObject {
 
     @Published var articles: [Article] = []
     @Published var category: Category =
-    Category(
-        rawValue: UserDefaults.standard
-            .string(
-                forKey: Constants.Keys.category
-            ) ?? Category.general.rawValue
-    ) ?? .general
+        Category(
+            rawValue: UserDefaults.standard
+                .string(
+                    forKey: Constants.Keys.category
+                ) ?? Category.general.rawValue
+        ) ?? .general
     {
         didSet {
             UserDefaults.standard
@@ -26,12 +26,14 @@ class NewsViewModel: ObservableObject {
     }
 
     private let newsService: NewsService
+    private var fetchedArticles: [Article] = []
 
     init(newsService: NewsService) {
         self.newsService = newsService
     }
-    
+
     func reset() {
+        fetchedArticles.removeAll()
         articles.removeAll()
     }
 
@@ -41,13 +43,26 @@ class NewsViewModel: ObservableObject {
             try await newsService
             .fetchNews(category: category)
 
-        articles.append(contentsOf: news.articles)
-
-        print(articles.count)
+        fetchedArticles.append(contentsOf: news.articles)
+        
+        articles = fetchedArticles
     }
-    
+
     func isShowingGeneralFeed() -> Bool {
         category == .general
+    }
+
+    func filterNews(_ searchText: String) {
+        if !searchText.isEmpty {
+            articles =
+            fetchedArticles
+                .filter(
+                    {
+                        $0.title.lowercased().contains(searchText.lowercased())
+                    })
+        } else {
+            articles = fetchedArticles
+        }
     }
 
 }

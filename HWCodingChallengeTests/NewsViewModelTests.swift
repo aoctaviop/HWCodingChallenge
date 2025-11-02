@@ -64,7 +64,7 @@ final class NewsViewModelTests: XCTestCase {
 
     @MainActor
     func
-        testNewsViewModel_ShowingGeneralFeedShouldBeTrueWhenAllCategoryIsSelected()
+        testNewsViewModel_ShowingGeneralFeedShouldBeTrueWhenGeneralCategoryIsSelected()
         async throws
     {
         let viewModel = NewsViewModel(
@@ -76,6 +76,87 @@ final class NewsViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.isShowingGeneralFeed())
     }
 
+    @MainActor
+    func
+    testNewsViewModel_FilterNewsWithMatchingCriteriaResultShouldMatchCriteria()
+    async throws
+    {
+        let news: [Article] = [
+            Article(
+                author: "John Smith",
+                title: "This is the first title",
+                description: "This is some description",
+                url: "https://abcnews.go.com/",
+                urlToImage:
+                    "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iUmZZ2Z_Xl8U/v1/1200x800.jpg",
+                publishedAt: .now,
+                content: "This is some content"
+            ),
+            Article(
+                author: "John Smith",
+                title: "This is the second title",
+                description: "This is some description",
+                url: "https://abcnews.go.com/",
+                urlToImage:
+                    "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iUmZZ2Z_Xl8U/v1/1200x800.jpg",
+                publishedAt: .now,
+                content: "This is some content"
+            ),
+        ]
+        
+        let viewModel = NewsViewModel(
+            newsService: NewsService(
+                networkClient: try NetworkClientStub.make(news)
+            )
+        )
+        
+        try? await viewModel.fetchNews()
+        
+        viewModel.filterNews("first")
+        
+        XCTAssertTrue(viewModel.articles.first!.title.contains("first"))
+    }
+    
+    @MainActor
+    func testNewsViewModel_FilterNewsWithNoMatchingCriteriaShouldResultEmpty()
+    async throws
+    {
+        let news: [Article] = [
+            Article(
+                author: "John Smith",
+                title: "This is the first title",
+                description: "This is some description",
+                url: "https://abcnews.go.com/",
+                urlToImage:
+                    "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iUmZZ2Z_Xl8U/v1/1200x800.jpg",
+                publishedAt: .now,
+                content: "This is some content"
+            ),
+            Article(
+                author: "John Smith",
+                title: "This is the second title",
+                description: "This is some description",
+                url: "https://abcnews.go.com/",
+                urlToImage:
+                    "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iUmZZ2Z_Xl8U/v1/1200x800.jpg",
+                publishedAt: .now,
+                content: "This is some content"
+            ),
+        ]
+        
+        let viewModel = NewsViewModel(
+            newsService: NewsService(
+                networkClient: try NetworkClientStub.make(news)
+            )
+        )
+        
+        try? await viewModel.fetchNews()
+        
+        viewModel.filterNews("third")
+        
+        XCTAssertTrue(viewModel.articles.isEmpty)
+    }
+    
     override func tearDown() {
         super.tearDown()
 
