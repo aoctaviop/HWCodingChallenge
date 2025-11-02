@@ -81,7 +81,7 @@ final class NetworkingLayerTests: XCTestCase {
         } catch {
             XCTAssertEqual(
                 error as? NetworkError,
-                .serverError(statusCode: 500)
+                .serverError(statusCode: 500, errorMessage: nil)
             )
         }
     }

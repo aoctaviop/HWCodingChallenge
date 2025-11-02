@@ -23,8 +23,11 @@ final class URLSessionNetworkClient: NetworkClient {
         }
 
         guard 200..<300 ~= httpResponse.statusCode else {
+            let decoder = JSONDecoder()
+            let error: APIError? = try? decoder.decode(APIError.self, from: data)
             throw NetworkError.serverError(
-                statusCode: httpResponse.statusCode
+                statusCode: httpResponse.statusCode,
+                errorMessage: error?.message
             )
         }
 

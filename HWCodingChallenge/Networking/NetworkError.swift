@@ -12,7 +12,7 @@ enum NetworkError: Error, Equatable {
     case invalidURL
     case invalidResponse
     case decodingError(Error)
-    case serverError(statusCode: Int)
+    case serverError(statusCode: Int, errorMessage: String?)
     case noData
     case underlying(Error)
     
@@ -24,7 +24,7 @@ enum NetworkError: Error, Equatable {
             return true
         case (.decodingError(_), .decodingError(_)):
             return true
-        case (.serverError(let lhsCode), .serverError(let rhsCode)):
+        case (.serverError(let lhsCode, _), .serverError(let rhsCode, _)):
             return lhsCode == rhsCode
         case (.noData, .noData):
             return true

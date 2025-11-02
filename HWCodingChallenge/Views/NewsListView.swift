@@ -130,8 +130,12 @@ struct NewsListView: View {
                 switch error {
                 case .decodingError(_):
                     errorMessage = "Data formatting issue."
-                case .serverError(let statusCode):
-                    errorMessage = "Server error: \(statusCode)."
+                case .serverError(let statusCode, let message):
+                    if let message = message {
+                        errorMessage = "\(message) Server error: \(statusCode)."
+                    } else {
+                        errorMessage = "Server error: \(statusCode)."
+                    }
                 default:
                     errorMessage = "Something went wrong."
                 }
