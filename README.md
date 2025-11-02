@@ -153,26 +153,3 @@ HWCodingChallenge/
 ## 📄 License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
-
-
-
-
-
-
-
-
-# HWCodingChallenge
-iOS Engineering Code Challenge for HatchWorksAI
-
-## Base App Architecture
-
-
-## Network Layer
-
-| Concept                     | Usage                                                                |
-| --------------------------- | -------------------------------------------------------------------- |
-| **Generics**                | `<T: Codable>` makes the network layer reusable for any model |
-| **Structured Concurrency**  | `async/await` simplifies async network code                          |
-| **Codable**                 | Decodes JSON into Swift structs                                      |
-| **URLSession & URLRequest** | Handles actual HTTP networking                                       |
