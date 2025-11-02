@@ -19,7 +19,7 @@ struct NewsListView: View {
     @State private var searchText = ""
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 List {
                     ForEach(
