@@ -83,11 +83,4 @@ class NewsViewModel: ObservableObject {
         }
     }
 
-    func getPaginationText() -> String? {
-        guard !fetchedArticles.isEmpty && totalResults > 0 else {
-            return nil
-        }
-        return "Page \(currentPage) out of \(totalPages)"
-    }
-
 }

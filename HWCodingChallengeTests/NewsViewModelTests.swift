@@ -78,117 +78,49 @@ final class NewsViewModelTests: XCTestCase {
 
     @MainActor
     func
-    testNewsViewModel_FilterNewsWithMatchingCriteriaResultShouldMatchCriteria()
-    async throws
+        testNewsViewModel_FilterNewsWithMatchingCriteriaResultShouldMatchCriteria()
+        async throws
     {
         let news: [Article] = [
             ArticleFactory.make(.full, title: "This is the first title"),
             ArticleFactory.make(.full, title: "This is the second title"),
         ]
-        
+
         let viewModel = NewsViewModel(
             newsService: NewsService(
                 networkClient: try NetworkClientStub.make(news)
             )
         )
-        
+
         try? await viewModel.fetchNews()
-        
+
         viewModel.filterNews("first")
-        
+
         XCTAssertTrue(viewModel.articles.first!.title.contains("first"))
     }
-    
+
     @MainActor
     func testNewsViewModel_FilterNewsWithNoMatchingCriteriaShouldResultEmpty()
-    async throws
+        async throws
     {
         let news: [Article] = [
             ArticleFactory.make(.full, title: "This is the first title"),
             ArticleFactory.make(.full, title: "This is the second title"),
         ]
-        
+
         let viewModel = NewsViewModel(
             newsService: NewsService(
                 networkClient: try NetworkClientStub.make(news)
             )
         )
-        
+
         try? await viewModel.fetchNews()
-        
+
         viewModel.filterNews("third")
-        
+
         XCTAssertTrue(viewModel.articles.isEmpty)
     }
-    
-    @MainActor
-    func testNewsViewModel_GetPaginationTextReturnsStringWhenThereAreResults()
-    async throws
-    {
-        let news: [Article] = [
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-            ArticleFactory.make(.full),
-        ]
-        
-        let viewModel = NewsViewModel(
-            newsService: NewsService(
-                networkClient: try NetworkClientStub.make(news)
-            )
-        )
-        
-        try? await viewModel.fetchNews()
-        
-        let totalPages = Int(ceil(Double(news.count) / Double(NewsAPI.pageSize)))
-        
-        XCTAssertEqual(
-            viewModel.getPaginationText(),
-            "Page 1 out of \(totalPages)"
-        )
-    }
-    
-    @MainActor
-    func testNewsViewModel_GetPaginationTextReturnsNilThereAreNoResults()
-    async throws
-    {
-        let viewModel = NewsViewModel(
-            newsService: NewsService(
-                networkClient: try NetworkClientStub.make()
-            )
-        )
-        
-        try? await viewModel.fetchNews()
-        
-        XCTAssertNil(viewModel.getPaginationText())
-    }
-    
+
     override func tearDown() {
         super.tearDown()
 

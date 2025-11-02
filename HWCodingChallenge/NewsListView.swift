@@ -76,10 +76,6 @@ struct NewsListView: View {
                             }
                             Spacer()
                         }
-                        if let paginationString = viewModel.getPaginationText() {
-                            Text(paginationString)
-                                .font(.footnote)
-                        }
                     }
                 }
             }
@@ -100,9 +96,7 @@ struct NewsListView: View {
                                     category.rawValue.capitalized,
                                     systemImage: category.image
                                 ) {
-                                    withAnimation {
-                                        viewModel.category = category
-                                    }
+                                    viewModel.category = category
                                     viewModel.reset()
                                     loadNews()
                                 }
