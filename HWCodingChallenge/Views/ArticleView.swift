@@ -20,7 +20,7 @@ struct ArticleView<ArticleDetailView: View>: View {
             ZStack {
                 ZStack {
                     if let imageURL = viewModel.getImageURl() {
-                        AsyncImage(url: imageURL)
+                        CachedImage(url: imageURL)
                             .frame(minWidth: 150.0)
                             .clipShape(RoundedRectangle(cornerRadius: 20.0))
                     }

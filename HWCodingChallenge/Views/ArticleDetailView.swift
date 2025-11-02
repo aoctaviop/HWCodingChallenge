@@ -18,7 +18,7 @@ struct ArticleDetailview: View {
             VStack {
                 ZStack(alignment: .bottom) {
                     if let imageURL = viewModel.getImageURl() {
-                        AsyncImage(url: imageURL)
+                        CachedImage(url: imageURL)
                             .frame(
                                 width: maxImageWidth,
                                 height: maxHeight
