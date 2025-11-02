@@ -40,7 +40,7 @@ class NewsViewModel: ObservableObject {
     func reset() {
         fetchedArticles.removeAll()
         articles.removeAll()
-        
+
         totalResults = 0
         totalPages = 0
         currentPage = 1
@@ -56,11 +56,7 @@ class NewsViewModel: ObservableObject {
 
         articles = fetchedArticles
         totalResults = news.totalResults
-        totalPages = Int(ceil(Double(totalResults) / 15.0))
-        
-        print(
-            "***\(articles.count) resullts out of \(totalResults), page \(currentPage) out of \(totalPages)"
-        )
+        totalPages = Int(ceil(Double(totalResults) / Double(NewsAPI.pageSize)))
     }
 
     func isShowingGeneralFeed() -> Bool {
@@ -81,20 +77,17 @@ class NewsViewModel: ObservableObject {
     }
 
     func checkPagination(itemIndex: Int) async {
-        print("Last loaded item: \(itemIndex)")
-
         if itemIndex == articles.count - 1, currentPage < totalPages {
             currentPage += 1
-            print("Current page \(currentPage)")
             try? await fetchNews()
         }
     }
-    
+
     func getPaginationText() -> String? {
         guard !fetchedArticles.isEmpty && totalResults > 0 else {
             return nil
         }
-        return "Showing \(fetchedArticles.count) out of \(totalResults)"
+        return "Page \(currentPage) out of \(totalPages)"
     }
 
 }

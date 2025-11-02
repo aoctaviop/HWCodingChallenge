@@ -16,6 +16,7 @@ enum NewsAPI {
 extension NewsAPI: Endpoint {
     
     static let apiKey: String = "364043d3c33a4b52a3ad5dadb9bee163"
+    static let pageSize: Int = 15
     
     enum Parameters {
         static let category = "category"
@@ -61,7 +62,7 @@ extension NewsAPI: Endpoint {
                 ),
                 URLQueryItem(
                     name: Parameters.pageSize,
-                    value: "15"
+                    value: "\(NewsAPI.pageSize)"
                 ),
                 URLQueryItem(
                     name: Parameters.page,
@@ -84,7 +85,7 @@ extension NewsAPI: Endpoint {
         components.host = baseURL
         components.path = path
         components.queryItems = queryItems
-        print("****\(components.url?.absoluteString ?? "")")
+        
         return components.url
     }
     

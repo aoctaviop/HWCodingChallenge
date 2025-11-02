@@ -100,7 +100,9 @@ struct NewsListView: View {
                                     category.rawValue.capitalized,
                                     systemImage: category.image
                                 ) {
-                                    viewModel.category = category
+                                    withAnimation {
+                                        viewModel.category = category
+                                    }
                                     viewModel.reset()
                                     loadNews()
                                 }
