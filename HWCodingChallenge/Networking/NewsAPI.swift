@@ -9,7 +9,7 @@ import Foundation
 
 enum NewsAPI {
     
-    case topHeadlines(category: Category?)
+    case topHeadlines(category: Category?, page: Int)
     
 }
 
@@ -45,7 +45,7 @@ extension NewsAPI: Endpoint {
         ]
         
         switch self {
-        case .topHeadlines(let category):
+        case .topHeadlines(let category, let page):
             if let category = category, category != .general {
                 items.append(
                     URLQueryItem(
@@ -62,6 +62,10 @@ extension NewsAPI: Endpoint {
                 URLQueryItem(
                     name: Parameters.pageSize,
                     value: "15"
+                ),
+                URLQueryItem(
+                    name: Parameters.page,
+                    value: "\(page)"
                 ),
             ]
             )
@@ -80,7 +84,7 @@ extension NewsAPI: Endpoint {
         components.host = baseURL
         components.path = path
         components.queryItems = queryItems
-        
+        print("****\(components.url?.absoluteString ?? "")")
         return components.url
     }
     

@@ -50,7 +50,7 @@ class NewsViewModel: ObservableObject {
     func fetchNews() async throws {
         let news =
             try await newsService
-            .fetchNews(category: category)
+            .fetchNews(category: category, page: currentPage)
 
         fetchedArticles.append(contentsOf: news.articles)
 
@@ -59,7 +59,7 @@ class NewsViewModel: ObservableObject {
         totalPages = Int(ceil(Double(totalResults) / 15.0))
         
         print(
-            "\(articles.count) resullts out of \(totalResults), page \(currentPage) out of \(totalPages)"
+            "***\(articles.count) resullts out of \(totalResults), page \(currentPage) out of \(totalPages)"
         )
     }
 
@@ -91,7 +91,7 @@ class NewsViewModel: ObservableObject {
     }
     
     func getPaginationText() -> String? {
-        guard !articles.isEmpty && totalResults > 0 else {
+        guard !fetchedArticles.isEmpty && totalResults > 0 else {
             return nil
         }
         return "Showing \(fetchedArticles.count) out of \(totalResults)"
