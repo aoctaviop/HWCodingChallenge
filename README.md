@@ -57,6 +57,7 @@ Combining **MVVM**, **SwiftUI**, **Combine**, and **Structured Concurrency (`asy
 * **Structured Concurrency (async/await)**
 * **Codable**
 * **URLSession / URLRequest**
+* **XCTest** and **Swift Testing**
 
 ---
 
