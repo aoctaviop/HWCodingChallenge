@@ -43,6 +43,7 @@ struct CategoryTests {
         #expect(category.rawValue == expectedRawValue)
     }
 
+    @MainActor
     @Test(
         arguments: Category.allCases
     )

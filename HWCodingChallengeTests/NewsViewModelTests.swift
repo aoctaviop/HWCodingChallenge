@@ -26,7 +26,7 @@ final class NewsViewModelTests: XCTestCase {
             UserDefaults.standard.string(forKey: Constants.Keys.category) ?? ""
 
         XCTAssertEqual(Category.science.rawValue, savedCategory)
-    }#imageLiteral(resourceName: "—Pngtree—black news icon free button_4437909.png")
+    }
 
     @MainActor
     func

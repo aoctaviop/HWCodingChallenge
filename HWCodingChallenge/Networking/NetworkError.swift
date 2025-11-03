@@ -24,8 +24,8 @@ enum NetworkError: Error, Equatable {
             return true
         case (.decodingError(_), .decodingError(_)):
             return true
-        case (.serverError(let lhsCode, _), .serverError(let rhsCode, _)):
-            return lhsCode == rhsCode
+        case (.serverError(let lhsCode, let lhsMessage), .serverError(let rhsCode, let rhsMessage)):
+            return lhsCode == rhsCode && lhsMessage == rhsMessage
         case (.noData, .noData):
             return true
         case (.underlying(_), .underlying(_)):

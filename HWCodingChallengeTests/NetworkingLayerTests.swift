@@ -85,6 +85,45 @@ final class NetworkingLayerTests: XCTestCase {
             )
         }
     }
+    
+    @MainActor
+    func testFetchNews_ServerErrorWithMessage() async throws {
+        let errorMessage = "This is the error message."
+        let apiError = APIError(message: "This is the error message.")
+        let errorData = try? JSONEncoder().encode(apiError)
+        
+        URLProtocolStub.stub = (
+            data: errorData,
+            response: HTTPURLResponse(
+                url:
+                    NewsAPI
+                    .topHeadlines(category: .general, page: 1)
+                    .generateURL()!,
+                statusCode: 500,
+                httpVersion: nil,
+                headerFields: nil
+            ),
+            error: nil
+        )
+        
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [URLProtocolStub.self]
+        
+        let stubbedSession = URLSession(configuration: config)
+        let client = URLSessionNetworkClient(session: stubbedSession)
+        
+        let service = NewsService(networkClient: client)
+        
+        do {
+            _ = try await service.fetchNews(category: .general, page: 1)
+            XCTFail("Expected an error but got success")
+        } catch {
+            XCTAssertEqual(
+                error as? NetworkError,
+                .serverError(statusCode: 500, errorMessage: errorMessage)
+            )
+        }
+    }
 
     @MainActor
     func testFetchNews_DecodingError() async throws {

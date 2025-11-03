@@ -12,11 +12,13 @@ import Testing
 
 struct NewsAPITests {
 
+    @MainActor
     @Test
     func NewsAPI_SchemeReturnsExpectedValue() async throws {
         #expect(NewsAPI.topHeadlines(category: nil, page: 0).scheme == "https")
     }
 
+    @MainActor
     @Test
     func NewsAPI_BaseURLReturnsExpectedValue() async throws {
         #expect(
@@ -25,6 +27,7 @@ struct NewsAPITests {
         )
     }
 
+    @MainActor
     @Test(arguments: [NewsAPI.topHeadlines(category: nil, page: 0)])
     func NewsAPI_PathReturnsExpectedValue(item: NewsAPI) async throws {
         var expectedPath = ""
@@ -80,6 +83,7 @@ struct NewsAPITests {
         )
     }
 
+    @MainActor
     @Test(arguments: [NewsAPI.topHeadlines(category: nil, page: 0)])
     func NewsAPI_MethodturnsExpectedValue(item: NewsAPI) async throws {
         var expectedMethod = ""
