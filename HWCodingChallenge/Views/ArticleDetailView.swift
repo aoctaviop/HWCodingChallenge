@@ -14,7 +14,7 @@ struct ArticleDetailview: View {
         GeometryReader { geometry in
             let maxWidth = geometry.size.width
             let maxHeight = geometry.size.height * 0.4
-            var maxImageWidth = UIScreen.main.bounds.size.width
+            let maxImageWidth = UIScreen.main.bounds.size.width
             VStack {
                 ZStack(alignment: .bottom) {
                     if let imageURL = viewModel.getImageURL() {
